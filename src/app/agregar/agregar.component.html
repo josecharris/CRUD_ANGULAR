@@ -1,0 +1,64 @@
+<div class="container">
+	<form action="" [formGroup]="formularioCreado">
+		<div class="form-group">
+			<label>Nombre</label>
+			<input type="text" class="form-control" placeholder="Digite el nombre"
+			formControlName="nombre">
+		</div>
+
+		<div *ngIf="formularioCreado.controls['nombre'].invalid && formularioCreado.controls['nombre'].dirty" class="alert alert-danger" role="alert">
+		  
+			<span *ngIf="formularioCreado.controls['nombre'].errors.required">El nombre es requerido</span>
+		</div>
+
+		<div class="form-group">
+			<label>Correo</label>
+			<input type="text" class="form-control" placeholder="Digite el correo"
+			formControlName="correo">
+		</div>
+
+		<div *ngIf="formularioCreado.controls['correo'].invalid && formularioCreado.controls['correo'].dirty">
+			<div class="alert alert-danger" role="alert" *ngIf="formularioCreado.controls['correo'].errors.required">
+			  <span> El correo es requerido</span>
+			</div>
+
+			<div class="alert alert-danger" role="alert" *ngIf="formularioCreado.controls['correo'].errors.email">
+			  <span>No parece un correo válido</span>
+			</div>
+		</div>	
+
+		<div class="form-group">
+			<label>Contraseña</label>
+			<input type="password" class="form-control" placeholder="Digite la contraseña"
+			formControlName="password">
+		</div>
+
+		<div *ngIf="formularioCreado.controls['password'].invalid && formularioCreado.controls['password'].dirty">
+			<div class="alert alert-danger" role="alert" *ngIf="formularioCreado.controls['password'].errors.required">
+				<span>
+					La contraseña es requerida
+				</span>
+			  
+			</div>
+
+			<div class="alert alert-danger" role="alert" *ngIf="formularioCreado.controls['password'].errors.minlength">
+				<span>
+					La contraseña debe tener al menos 8 caracteres!
+				</span>		 
+			</div>
+		</div>
+		<button *ngIf="esNuevo" [disabled]="!formularioCreado.valid" class="btn btn-success" (click)="agregar()">Agregar</button>
+		<button *ngIf="!esNuevo" [disabled]="!formularioCreado.valid" class="btn btn-danger">Agregar</button>
+
+	</form>
+</div>
+
+<div class="container border">
+	<div *ngFor="let usuario of usuarios; let posicion = index">
+		<h4>{{usuario.nombre}}</h4><br>
+		<h4>{{usuario.correo}}</h4><br>
+		<h4>{{usuario.password}}</h4><br>
+		<button class="btn btn-danger" (click)="editar(posicion)">Editar</button>
+		<button class="btn btn-warning" (click)="eliminar(posicion)">Eliminar</button>
+	</div>
+</div>
